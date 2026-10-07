@@ -93,8 +93,44 @@ button { cursor: pointer; }
   background: linear-gradient(180deg, #fffaf2 0%, #d9d1c4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .hero p { margin: 0; max-width: 34ch; color: var(--chalk-dim); font: italic 400 17px/1.4 var(--f-serif); }
-.hero-art { width: clamp(112px, 30vw, 220px); aspect-ratio: 1; max-width: 100%; }
-.hero-art svg { width: 100%; height: 100%; animation: spin 90s linear infinite; }
+.hero-art { width: clamp(132px, 40vw, 250px); aspect-ratio: 1; max-width: 100%; }
+.hero-art svg { width: 100%; height: 100%; overflow: visible; }
+.c-enter { animation: cEnter 1.1s cubic-bezier(.2,1.4,.4,1) both; transform-origin: 100px 200px; }
+.c-all { animation: cSway 3.2s ease-in-out infinite; transform-origin: 100px 200px; }
+.c-body { animation: cBreath 3.2s ease-in-out infinite; transform-origin: 100px 200px; }
+.c-head { animation: cHead 3.2s ease-in-out infinite; transform-origin: 100px 134px; }
+.c-arm-wave { transform-origin: 132px 150px; animation: cWave 1.6s ease-in-out infinite; }
+.c-hand { transform-origin: 167px 108px; animation: cHand .4s ease-in-out infinite alternate; }
+.c-arm-pizza { transform-origin: 70px 150px; animation: cPz 3.2s ease-in-out infinite; }
+.c-pizza { transform-origin: 36px 160px; animation: cPzTilt 3.2s ease-in-out infinite; }
+.c-eyes { transform-origin: 100px 91px; animation: cBlink 4.2s infinite; }
+.c-look { animation: cLook 6.4s ease-in-out infinite; }
+.c-brows { animation: cBrow 3.2s ease-in-out infinite; }
+.c-mouth { transform-origin: 100px 109px; animation: cTalk 6.4s ease-in-out infinite; }
+.c-steam path { stroke-dasharray: 26; animation: cSteam 2.4s ease-in-out infinite; }
+.c-steam .s2 { animation-delay: .8s; } .c-steam .s3 { animation-delay: 1.6s; }
+.c-drip { transform-origin: 58px 152px; animation: cDrip 3.2s ease-in-out infinite; }
+.c-spark path { transform-box: fill-box; transform-origin: center; animation: cTw 2.2s ease-in-out infinite; }
+.c-spark .k2 { animation-delay: .7s; } .c-spark .k3 { animation-delay: 1.4s; }
+.c-ring { transform-origin: 100px 106px; animation: spin 40s linear infinite; }
+.c-hola { transform-origin: 150px 86px; animation: cHola 6.4s ease-in-out infinite; opacity: 0; }
+@keyframes cEnter { from { transform: translateY(60px) scale(.85); opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes cSway { 0%,100% { transform: rotate(-1.5deg) } 50% { transform: rotate(1.5deg) } }
+@keyframes cBreath { 0%,100% { transform: scale(1,1) } 50% { transform: scale(1.015,1.025) } }
+@keyframes cHead { 0%,100% { transform: rotate(-4deg) translateY(0) } 50% { transform: rotate(4deg) translateY(-2px) } }
+@keyframes cWave { 0%,100% { transform: rotate(-18deg) } 50% { transform: rotate(14deg) } }
+@keyframes cHand { from { transform: rotate(-16deg) } to { transform: rotate(14deg) } }
+@keyframes cPz { 0%,100% { transform: translateY(0) rotate(0) } 50% { transform: translateY(-5px) rotate(-3deg) } }
+@keyframes cPzTilt { 0%,100% { transform: rotate(-3deg) } 50% { transform: rotate(3deg) } }
+@keyframes cBlink { 0%,90%,100% { transform: scaleY(1) } 93% { transform: scaleY(.08) } 96% { transform: scaleY(1) } }
+@keyframes cLook { 0%,30%,100% { transform: translate(0,0) } 38%,55% { transform: translate(-1.6px,.6px) } 63%,85% { transform: translate(1.6px,0) } }
+@keyframes cBrow { 0%,60%,100% { transform: translateY(0) } 70%,85% { transform: translateY(-3px) } }
+@keyframes cTalk { 0%,10%,52%,100% { transform: scaleY(.55) } 16%,24%,32%,40% { transform: scaleY(1.05) } 20%,28%,36%,46% { transform: scaleY(.6) } }
+@keyframes cSteam { 0% { stroke-dashoffset: 26; opacity: 0; transform: translateY(4px) } 30% { opacity: .9 } 100% { stroke-dashoffset: -26; opacity: 0; transform: translateY(-8px) } }
+@keyframes cDrip { 0%,100% { transform: scaleY(.6) } 50% { transform: scaleY(1.25) } }
+@keyframes cTw { 0%,100% { transform: scale(.2) rotate(0); opacity: 0 } 50% { transform: scale(1) rotate(45deg); opacity: 1 } }
+@keyframes cHola { 0%,8% { opacity: 0; transform: scale(.3) rotate(-10deg) } 14%,48% { opacity: 1; transform: scale(1) rotate(0) } 56%,100% { opacity: 0; transform: scale(.3) rotate(8deg) } }
+@media (prefers-reduced-motion: reduce) { .chef *, .chef { animation: none !important } .c-hola { opacity: 1 } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .facts { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 18px 6px; }
@@ -197,6 +233,17 @@ section.cat { padding-block: 36px 4px; }
 .foot .chips + .add { width: 44px; height: 44px; padding: 0; justify-content: center; margin-left: 0; }
 .foot .chips + .add span { display: none; }
 @media (max-width: 480px) { .brand span { display: none; } }
+/* móvil: la búsqueda es un botón redondo y solo se expande al tocarla, para no tapar el nombre */
+@media (max-width: 480px) {
+  .bar-row { position: relative; }
+  .search { flex: 0 0 38px; min-width: 38px; width: 38px; }
+  .search input { padding: 0; color: transparent; cursor: pointer; }
+  .search input::placeholder { color: transparent; }
+  .search svg { left: 11px; }
+  .search:focus-within, .search.has-q { position: absolute; left: 0; right: 0; width: auto; z-index: 3; }
+  .search:focus-within input, .search.has-q input { padding: 0 34px 0 36px; color: var(--chalk); cursor: text; background: #2e2a26; }
+  .search:focus-within input::placeholder { color: var(--chalk-dim); }
+}
 
 /* Drinks: photo tiles */
 .dgrid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
@@ -232,8 +279,7 @@ section.cat { padding-block: 36px 4px; }
 .v-stage { position: relative; width: min(100%, 62vh, 620px); aspect-ratio: 1; flex: none; cursor: grab; touch-action: none; transform: perspective(1100px) rotateX(16deg) scale(.86) translateY(30px); opacity: 0; transition: transform .8s cubic-bezier(.16,.84,.24,1), opacity .5s ease; }
 .viewer.open .v-stage { transform: none; opacity: 1; }
 .v-stage:active { cursor: grabbing; }
-.v-stage canvas, .v-stage img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 26px;
-  -webkit-mask-image: radial-gradient(closest-side, #000 82%, transparent 100%); mask-image: radial-gradient(closest-side, #000 82%, transparent 100%); }
+.v-stage canvas, .v-stage img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 22px; box-shadow: 0 18px 50px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); }
 .v-stage::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -4%; height: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(242,135,58,.28), transparent); filter: blur(8px); z-index: -1; }
 .v-load { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .3s; }
 .v-load i { width: 38px; height: 38px; border-radius: 50%; border: 3px solid rgba(247,197,34,.2); border-top-color: var(--yolk); animation: spin .8s linear infinite; }
@@ -337,13 +383,86 @@ footer .logo { margin-top: 22px; font: italic 900 22px/1 var(--f-display); color
       <p>Pizzas al horno, pastas, carnes a la parrilla y algo para picar. Elige con calma.</p>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 200 200" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="100" cy="100" r="92" stroke="#f7c522" stroke-width="3" stroke-dasharray="2 7" opacity=".7"/>
-        <circle cx="100" cy="100" r="80" stroke="#f2873a" stroke-width="10" opacity=".9"/>
-        <circle cx="100" cy="100" r="70" fill="#f2873a" fill-opacity=".1" stroke="#efe9df" stroke-width="2" opacity=".85"/>
-        <g stroke="#efe9df" stroke-width="2" opacity=".55"><path d="M100 30v140M30 100h140M50.5 50.5l99 99M149.5 50.5l-99 99"/></g>
-        <g fill="#f2873a"><circle cx="78" cy="62" r="9"/><circle cx="128" cy="74" r="9"/><circle cx="66" cy="112" r="9"/><circle cx="112" cy="122" r="9"/><circle cx="138" cy="118" r="7"/><circle cx="92" cy="146" r="8"/><circle cx="100" cy="90" r="6"/></g>
-        <g fill="#f7c522"><circle cx="86" cy="84" r="3"/><circle cx="120" cy="98" r="3"/><circle cx="82" cy="128" r="3"/><circle cx="134" cy="140" r="3"/><circle cx="108" cy="58" r="3"/><circle cx="58" cy="90" r="3"/></g>
+      <svg class="chef" viewBox="0 0 200 200" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <radialGradient id="cgGlow" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#f2873a" stop-opacity=".55"/><stop offset=".6" stop-color="#f2873a" stop-opacity=".16"/><stop offset="1" stop-color="#f2873a" stop-opacity="0"/></radialGradient>
+          <radialGradient id="cgSkin" cx=".42" cy=".38" r=".75"><stop offset="0" stop-color="#ffe6cf"/><stop offset=".55" stop-color="#f7c8a2"/><stop offset="1" stop-color="#d9946c"/></radialGradient>
+          <radialGradient id="cgCloth" cx=".38" cy=".3" r=".9"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f3"/><stop offset="1" stop-color="#b9bfc8"/></radialGradient>
+          <linearGradient id="cgSleeve" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#e9ecf0"/><stop offset="1" stop-color="#bcc2cb"/></linearGradient>
+          <radialGradient id="cgNose" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffd2b8"/><stop offset="1" stop-color="#d98364"/></radialGradient>
+          <radialGradient id="cgIris" cx=".4" cy=".4" r=".6"><stop offset="0" stop-color="#8a5a2f"/><stop offset="1" stop-color="#2a1608"/></radialGradient>
+          <linearGradient id="cgStache" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4b2a"/><stop offset="1" stop-color="#3e2312"/></linearGradient>
+          <radialGradient id="cgCrust" cx=".5" cy=".4" r=".6"><stop offset=".7" stop-color="#f0b766"/><stop offset="1" stop-color="#b8692a"/></radialGradient>
+          <radialGradient id="cgCheese" cx=".45" cy=".4" r=".6"><stop offset="0" stop-color="#ffe9a6"/><stop offset=".7" stop-color="#f7c94a"/><stop offset="1" stop-color="#e59a2c"/></radialGradient>
+          <radialGradient id="cgPep" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#e35b4b"/><stop offset="1" stop-color="#8f1d16"/></radialGradient>
+          <radialGradient id="cgBtn" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#9aa1ab"/></radialGradient>
+          <filter id="cfShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>
+          <filter id="cfBlur"><feGaussianBlur stdDeviation="2.2"/></filter>
+        </defs>
+        <circle cx="100" cy="112" r="96" fill="url(#cgGlow)"/>
+        <circle class="c-ring" cx="100" cy="106" r="88" fill="none" stroke="#f7c522" stroke-width="2" stroke-dasharray="1.5 8" opacity=".55"/>
+        <g class="c-enter"><g class="c-all" filter="url(#cfShadow)">
+        <g class="c-body">
+          <path d="M44 204 C44 166 62 142 100 137 C138 142 156 166 156 204Z" fill="url(#cgCloth)" stroke="#3a2a20" stroke-width="2.4"/>
+          <path d="M100 140 C96 160 98 184 100 204" fill="none" stroke="#c9ced6" stroke-width="2"/>
+          <path d="M80 141 L100 162 L88 140Z M120 141 L100 162 L112 140Z" fill="#fff" stroke="#3a2a20" stroke-width="2"/>
+          <g fill="url(#cgBtn)" stroke="#7d8590" stroke-width=".8"><circle cx="88" cy="172" r="3.2"/><circle cx="112" cy="172" r="3.2"/><circle cx="88" cy="188" r="3.2"/><circle cx="112" cy="188" r="3.2"/></g>
+          <g transform="translate(120 160)"><rect x="0" y="0" width="5" height="9" fill="#2e9e4f"/><rect x="5" y="0" width="5" height="9" fill="#fff"/><rect x="10" y="0" width="5" height="9" fill="#d63a2f"/><rect x="0" y="0" width="15" height="9" fill="none" stroke="#3a2a20" stroke-width=".9" rx="1"/></g>
+        </g>
+        <g class="c-arm-pizza">
+          <path d="M70 150 C58 156 48 162 40 166" fill="none" stroke="#3a2a20" stroke-width="19"/>
+          <path d="M70 150 C58 156 48 162 40 166" fill="none" stroke="url(#cgSleeve)" stroke-width="14.5"/>
+          <path d="M45 158 L49 172" stroke="#3a2a20" stroke-width="3"/>
+          <ellipse cx="36" cy="164" rx="9.5" ry="7.5" fill="url(#cgSkin)" stroke="#3a2a20" stroke-width="2"/>
+          <g class="c-pizza">
+            <ellipse cx="36" cy="153" rx="33" ry="14" fill="#9c5a24" stroke="#3a2a20" stroke-width="2"/>
+            <ellipse cx="36" cy="149" rx="33" ry="14" fill="url(#cgCrust)" stroke="#3a2a20" stroke-width="2"/>
+            <ellipse cx="36" cy="149" rx="27" ry="10.5" fill="#c9381f"/>
+            <ellipse cx="36" cy="148.5" rx="25" ry="9.5" fill="url(#cgCheese)"/>
+            <g fill="#fff6d0" opacity=".7"><ellipse cx="26" cy="146" rx="3" ry="1.2"/><ellipse cx="48" cy="151" rx="2.5" ry="1"/><ellipse cx="38" cy="144" rx="2" ry=".8"/></g>
+            <g fill="url(#cgPep)"><ellipse cx="24" cy="149" rx="5" ry="2.4"/><ellipse cx="40" cy="146" rx="5" ry="2.4"/><ellipse cx="50" cy="150" rx="4.4" ry="2.1"/><ellipse cx="32" cy="153" rx="4.4" ry="2.1"/></g>
+            <g fill="#2f8a3c"><path d="M30 144 q4 -3 7 0 q-4 3 -7 0z"/><path d="M45 154 q4 -3 7 0 q-4 3 -7 0z"/><path d="M17 152 q4 -3 7 0 q-4 3 -7 0z"/></g>
+            <path class="c-drip" d="M58 152 q2 6 0 10 q-2 -4 0 -10z" fill="#f7c94a" stroke="#c98a20" stroke-width=".6"/>
+            <g class="c-steam" fill="none" stroke="#fff" stroke-width="2.2" opacity=".8">
+              <path class="s1" d="M24 136 q-4 -6 0 -12 q4 -6 0 -12"/><path class="s2" d="M37 133 q-4 -6 0 -12 q4 -6 0 -12"/><path class="s3" d="M50 136 q-4 -6 0 -12 q4 -6 0 -12"/>
+            </g>
+          </g>
+        </g>
+        <g class="c-arm-wave">
+          <path d="M132 150 C146 140 156 126 164 110" fill="none" stroke="#3a2a20" stroke-width="19"/>
+          <path d="M132 150 C146 140 156 126 164 110" fill="none" stroke="url(#cgSleeve)" stroke-width="14.5"/>
+          <path d="M157 112 L170 118" stroke="#3a2a20" stroke-width="3"/>
+          <g class="c-hand">
+            <g stroke="#3a2a20" stroke-width="7.4"><path d="M159 98 L153 84"/><path d="M164 95 L162 79"/><path d="M170 95 L171 79"/><path d="M175 98 L179 84"/><path d="M175 106 L184 101"/></g>
+            <ellipse cx="167" cy="104" rx="11" ry="10.5" fill="url(#cgSkin)" stroke="#3a2a20" stroke-width="2.2"/>
+            <g stroke="#f8cfae" stroke-width="5"><path d="M159 98 L153 84"/><path d="M164 95 L162 79"/><path d="M170 95 L171 79"/><path d="M175 98 L179 84"/><path d="M175 106 L184 101"/></g>
+          </g>
+        </g>
+        <g class="c-head">
+          <path d="M88 126 h24 v14 h-24z" fill="#e8a982" stroke="#3a2a20" stroke-width="2"/>
+          <ellipse cx="71" cy="98" rx="5" ry="7.5" fill="url(#cgSkin)" stroke="#3a2a20" stroke-width="2.2"/><ellipse cx="129" cy="98" rx="5" ry="7.5" fill="url(#cgSkin)" stroke="#3a2a20" stroke-width="2.2"/>
+          <path d="M72 92 C72 72 84 64 100 64 C116 64 128 72 128 92 C128 114 118 128 100 128 C82 128 72 114 72 92Z" fill="url(#cgSkin)" stroke="#3a2a20" stroke-width="2.6"/>
+          <g stroke="#3a2a20" stroke-width="2.8" fill="url(#cgCloth)"><circle cx="77" cy="48" r="15"/><circle cx="100" cy="37" r="19"/><circle cx="123" cy="48" r="15"/><rect x="71" y="46" width="58" height="24" rx="3"/></g>
+          <g fill="url(#cgCloth)"><circle cx="77" cy="48" r="13.6"/><circle cx="100" cy="37" r="17.6"/><circle cx="123" cy="48" r="13.6"/><rect x="72.4" y="47" width="55.2" height="22" rx="2"/></g>
+          <path d="M88 52 Q86 60 88 68 M100 50 V68 M112 52 Q114 60 112 68" stroke="#d3d8df" stroke-width="2" fill="none"/>
+          <ellipse cx="92" cy="30" rx="7" ry="4" fill="#fff" opacity=".9"/>
+          <rect x="69" y="64" width="62" height="9" rx="3" fill="url(#cgCloth)" stroke="#3a2a20" stroke-width="2.4"/>
+          <g filter="url(#cfBlur)" fill="#ff7a6b" opacity=".45"><circle cx="80" cy="104" r="6"/><circle cx="120" cy="104" r="6"/></g>
+          <g class="c-brows" fill="#5a3418"><path d="M79 81 Q87 74 96 79 Q88 78 80 83Z"/><path d="M121 81 Q113 74 104 79 Q112 78 120 83Z"/></g>
+          <g class="c-eyes">
+            <ellipse cx="88" cy="91" rx="5.6" ry="6.6" fill="#fff" stroke="#3a2a20" stroke-width="1.6"/><ellipse cx="112" cy="91" rx="5.6" ry="6.6" fill="#fff" stroke="#3a2a20" stroke-width="1.6"/>
+            <g class="c-look"><circle cx="89" cy="92" r="3.7" fill="url(#cgIris)"/><circle cx="113" cy="92" r="3.7" fill="url(#cgIris)"/><circle cx="89" cy="92" r="1.7" fill="#120804"/><circle cx="113" cy="92" r="1.7" fill="#120804"/>
+            <circle cx="90.3" cy="90.4" r="1.3" fill="#fff"/><circle cx="114.3" cy="90.4" r="1.3" fill="#fff"/></g>
+          </g>
+          <g class="c-mouth"><path d="M89 109 Q100 126 111 109 Z" fill="#7a1414" stroke="#3a2a20" stroke-width="1.8"/><path d="M90.5 109.5 h19 l-1.5 3.5 h-16z" fill="#fff"/><path d="M94 118 Q100 114 106 118 Q100 122 94 118Z" fill="#e8706f"/></g>
+          <ellipse cx="100" cy="99" rx="5.4" ry="4.4" fill="url(#cgNose)"/><ellipse cx="98.4" cy="97.6" rx="1.6" ry="1" fill="#fff" opacity=".7"/>
+          <path d="M83 106 C89 100 96 103 100 104.5 C104 103 111 100 117 106 C112 111 106 108.5 100 108.5 C94 108.5 88 111 83 106Z" fill="url(#cgStache)" stroke="#2e180a" stroke-width="1.2"/>
+          <path d="M83 106 q-6 1.5 -7.5 -4 q2 3 5 2 M117 106 q6 1.5 7.5 -4 q-2 3 -5 2" fill="none" stroke="#5a3418" stroke-width="2.6"/>
+        </g>
+        </g></g>
+        <g class="c-spark" fill="#ffe27a"><path class="k1" d="M70 126 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2z"/><path class="k2" d="M12 124 l1.5 3.5 l3.5 1.5 l-3.5 1.5 l-1.5 3.5 l-1.5 -3.5 l-3.5 -1.5 l3.5 -1.5z"/><path class="k3" d="M186 140 l1.5 3.5 l3.5 1.5 l-3.5 1.5 l-1.5 3.5 l-1.5 -3.5 l-3.5 -1.5 l3.5 -1.5z"/></g>
+        <g class="c-hola"><path d="M136 46 h52 a7 7 0 0 1 7 7 v18 a7 7 0 0 1 -7 7 h-34 l-9 9 v-9 h-9 a7 7 0 0 1 -7 -7 v-18 a7 7 0 0 1 7 -7z" fill="#f7c522" stroke="#3a2a20" stroke-width="2.2" filter="url(#cfShadow)"/>
+          <text x="162" y="67.5" text-anchor="middle" font-family="Barlow Condensed, system-ui, sans-serif" font-weight="800" font-size="15.5" fill="#1d130c">¡HOLA!</text></g>
       </svg>
     </div>
   </div>
@@ -398,7 +517,7 @@ footer .logo { margin-top: 22px; font: italic 900 22px/1 var(--f-display); color
       <span id="vAddWrap"></span>
       <button class="v-btn" type="button" id="vNext" aria-label="Plato siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
     </div>
-    <div class="v-hint"><span id="vHintTxt">Arrastra el plato para girarlo</span><button type="button" id="gyroBtn" hidden>Mover con el teléfono</button></div>
+    <div class="v-hint"><span id="vHintTxt">Arrastra para girar · pellizca o toca 2 veces para acercar</span><button type="button" id="gyroBtn" hidden>Mover con el teléfono</button></div>
   </div>
 </div>
 
@@ -689,11 +808,11 @@ const VS = 'attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=ve
 const FS = `precision highp float;
 varying vec2 v;
 uniform sampler2D uImg,uDep;
-uniform vec2 uOff,uScale;
+uniform vec2 uOff,uScale,uPan;
 uniform float uZoom,uFocus,uShine;
 float D(vec2 p){return texture2D(uDep,p).r;}
 void main(){
-  vec2 uv=(v-.5)*uScale/uZoom+.5;
+  vec2 uv=(v-.5)*uScale/uZoom+.5+uPan;
   const int N=26; float st=1./float(N);
   float pt=1.; float pd=D(uv-uOff*(1.-uFocus))-1.; vec2 s=uv; float t=1.;
   for(int i=1;i<=N;i++){
@@ -702,8 +821,10 @@ void main(){
     if(d>=0.){ float a=pd/(pd-d); t=mix(pt,t,a); s=uv-uOff*(t-uFocus); break; }
     pt=t; pd=d;
   }
-  s=clamp(s,.001,.999);
+  vec2 q=s; s=clamp(s,.001,.999);
   vec3 c=texture2D(uImg,s).rgb;
+  vec3 bg=(texture2D(uImg,vec2(.01,.01)).rgb+texture2D(uImg,vec2(.99,.01)).rgb+texture2D(uImg,vec2(.01,.99)).rgb+texture2D(uImg,vec2(.99,.99)).rgb)*.25*.6;
+  float m=smoothstep(0.,.035,q.x)*smoothstep(0.,.035,q.y)*smoothstep(0.,.035,1.-q.x)*smoothstep(0.,.035,1.-q.y);
   float e=1./512.;
   float dx=D(s+vec2(e,0.))-D(s-vec2(e,0.)); float dy=D(s+vec2(0.,e))-D(s-vec2(0.,e));
   vec3 n=normalize(vec3(-dx*28.,-dy*28.,1.));
@@ -713,11 +834,12 @@ void main(){
   float dep=D(s);
   c+=vec3(1.,.86,.68)*spec*uShine*smoothstep(.25,.9,lum)*dep;
   c*=1.+.06*(dot(n,L)-.5)*dep;
+  c=mix(bg,c,m);
   gl_FragColor=vec4(c,1.);
 }`;
 class Dish3D {
   constructor(canvas, opt = {}) {
-    this.cv = canvas; this.o = Object.assign({ amp: .06, focus: .42, zoom: 1.07, dpr: 1.75, shine: .55, sway: 1 }, opt);
+    this.cv = canvas; this.o = Object.assign({ amp: .06, focus: .42, zoom: 1.07, dpr: 1.75, shine: .55, sway: 1, tilt: 0 }, opt);
     const gl = this.gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false, powerPreference: 'high-performance' });
     if (!gl) return;
     const sh = (t, s) => { const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); return x; };
@@ -726,10 +848,10 @@ class Dish3D {
     gl.useProgram(p);
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
     const a = gl.getAttribLocation(p, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-    this.u = {}; ['uImg','uDep','uOff','uScale','uZoom','uFocus','uShine'].forEach(k => this.u[k] = gl.getUniformLocation(p, k));
+    this.u = {}; ['uImg','uDep','uOff','uScale','uZoom','uFocus','uShine','uPan'].forEach(k => this.u[k] = gl.getUniformLocation(p, k));
     gl.uniform1i(this.u.uImg, 0); gl.uniform1i(this.u.uDep, 1);
     this.tex = [gl.createTexture(), gl.createTexture()];
-    this.cur = { x: 0, y: 0 }; this.tgt = { x: 0, y: 0 }; this.user = null; this.t0 = performance.now(); this.intro = 0; this.ready = false; this.running = false;
+    this.z = 1; this.zt = 1; this.pan = { x: 0, y: 0 }; this.cur = { x: 0, y: 0 }; this.tgt = { x: 0, y: 0 }; this.user = null; this.t0 = performance.now(); this.intro = 0; this.ready = false; this.running = false;
     this.loop = this.loop.bind(this);
     canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); this.ready = false; });
   }
@@ -747,7 +869,7 @@ class Dish3D {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     });
-    this.ready = true; this.intro = performance.now(); this.cur = { x: -1.1, y: .9 };
+    this.resetZoom(); this.ready = true; this.intro = performance.now(); this.cur = { x: -1.1, y: .9 };
     return true;
   }
   resize() {
@@ -766,8 +888,10 @@ class Dish3D {
     if (this.user) { tx = this.user.x; ty = this.user.y; }
     this.tgt.x = tx; this.tgt.y = ty;
     const k = 1 - Math.exp(-dt * (this.user ? 9 : 2.6));
+    this.z += (this.zt - this.z) * (1 - Math.exp(-dt * 14));
     this.cur.x += (this.tgt.x - this.cur.x) * k; this.cur.y += (this.tgt.y - this.cur.y) * k;
     if (this.ready) this.draw(t);
+    if (this.o.tilt) this.cv.style.transform = `perspective(700px) rotateY(${(this.cur.x * this.o.tilt).toFixed(2)}deg) rotateX(${(this.cur.y * this.o.tilt * .8).toFixed(2)}deg) scale(${(1 - this.o.tilt * .004).toFixed(3)})`;
     requestAnimationFrame(this.loop);
   }
   draw(t) {
@@ -776,9 +900,45 @@ class Dish3D {
     const amp = this.o.amp, ie = Math.min(1, (performance.now() - this.intro) / 1400), zin = 1 - Math.pow(1 - ie, 3);
     gl.uniform2f(this.u.uOff, this.cur.x * amp, this.cur.y * amp);
     gl.uniform2f(this.u.uScale, this.scale[0], this.scale[1]);
-    gl.uniform1f(this.u.uZoom, this.o.zoom * (.94 + .06 * zin) + (REDUCED ? 0 : Math.sin(t * .35) * .008));
+    gl.uniform1f(this.u.uZoom, (this.o.zoom * (.94 + .06 * zin) + (REDUCED ? 0 : Math.sin(t * .35) * .008)) * this.z);
+    gl.uniform2f(this.u.uPan, this.pan.x, this.pan.y);
     gl.uniform1f(this.u.uFocus, this.o.focus); gl.uniform1f(this.u.uShine, this.o.shine);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  resetZoom() { this.zt = 1; this.z = 1; this.pan = { x: 0, y: 0 }; this.zLock = false; }
+  /* zoom: pellizco con dos dedos, doble toque o rueda; con zoom, un dedo mueve la foto */
+  enableZoom(el) {
+    const pts = new Map(); let d0 = 1, z0 = 1, last = null, tapT = 0, tapX = 0, tapY = 0;
+    const clampPan = () => { const m = .5 - .5 / this.zt; this.pan.x = Math.max(-m, Math.min(m, this.pan.x)); this.pan.y = Math.max(-m, Math.min(m, this.pan.y)); };
+    const setZ = (z, cx, cy) => {
+      z = Math.max(1, Math.min(4, z));
+      this.pan.x += cx * (1 / this.zt - 1 / z); this.pan.y += cy * (1 / this.zt - 1 / z);
+      this.zt = z; clampPan();
+      if (z <= 1.02) this.resetZoom(); else this.zLock = true;
+    };
+    const rel = (x, y) => { const r = el.getBoundingClientRect(); return [(x - r.left) / r.width - .5, -((y - r.top) / r.height - .5)]; };
+    el.addEventListener('pointerdown', e => {
+      pts.set(e.pointerId, e); last = { x: e.clientX, y: e.clientY };
+      if (pts.size === 2) { const [a, b] = [...pts.values()]; d0 = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1; z0 = this.zt; this.zLock = true; }
+      const now = performance.now();
+      if (pts.size === 1 && now - tapT < 320 && Math.hypot(e.clientX - tapX, e.clientY - tapY) < 30) { setZ(this.zt > 1.3 ? 1 : 2.5, ...rel(e.clientX, e.clientY)); tapT = 0; }
+      else { tapT = now; tapX = e.clientX; tapY = e.clientY; }
+    }, true);
+    el.addEventListener('pointermove', e => {
+      if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
+      if (pts.size >= 2) {
+        const [a, b] = [...pts.values()], d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        setZ(z0 * d / d0, ...rel((a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2)); e.stopImmediatePropagation(); return;
+      }
+      if (this.zLock) {
+        const r = el.getBoundingClientRect();
+        this.pan.x -= (e.clientX - last.x) / r.width / this.zt; this.pan.y += (e.clientY - last.y) / r.height / this.zt; clampPan();
+        last = { x: e.clientX, y: e.clientY }; e.stopImmediatePropagation();
+      }
+    }, true);
+    const up = e => { pts.delete(e.pointerId); if (pts.size === 1) { const q = [...pts.values()][0]; last = { x: q.clientX, y: q.clientY }; } };
+    el.addEventListener('pointerup', up, true); el.addEventListener('pointercancel', up, true);
+    el.addEventListener('wheel', e => { e.preventDefault(); setZ(this.zt * Math.exp(-e.deltaY * .0015), ...rel(e.clientX, e.clientY)); }, { passive: false });
   }
   /* pointer drag → orbit; release → vuelve al vaivén suave */
   bindDrag(el, strength = 1) {
@@ -788,7 +948,7 @@ class Dish3D {
       if (e.pointerId !== id) { if (e.pointerType === 'mouse' && id === null && strength < 1) { const r = el.getBoundingClientRect(); this.user = { x: ((e.clientX - r.left) / r.width - .5) * 2.2, y: -((e.clientY - r.top) / r.height - .5) * 1.6 }; } return; }
       const r = el.getBoundingClientRect(), dx = (e.clientX - sx) / r.width, dy = (e.clientY - sy) / r.height;
       if (Math.abs(dx) + Math.abs(dy) > .02) moved = true;
-      this.user = { x: Math.max(-1.6, Math.min(1.6, this.ux + dx * 3.2)), y: Math.max(-1.2, Math.min(1.2, this.uy - dy * 2.6)) };
+      this.user = { x: Math.max(-2.2, Math.min(2.2, this.ux + dx * 6)), y: Math.max(-1.7, Math.min(1.7, this.uy - dy * 5)) };
     });
     const up = e => { if (e.pointerId !== id) return; id = null; this.user = this.gyro || null; this.lastMoved = moved; };
     el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
@@ -821,7 +981,7 @@ if (!needsGyroPermission && matchMedia('(pointer: coarse)').matches && !REDUCED)
 /* ===== Portada: Pizza de la Casa en 3D en vivo ===== */
 const f3d = $('#f3d');
 f3d.querySelector('.b3d').innerHTML = CUBE + 'Vista 3D';
-const hero = new Dish3D(document.createElement('canvas'), { amp: .055, dpr: 1.5, shine: .5 });
+const hero = new Dish3D(document.createElement('canvas'), { amp: .05, dpr: 1.5, shine: .5, focus: .08 });
 if (hero.ok) {
   f3d.insertBefore(hero.cv, f3d.firstChild);
   hero.load(FOTOS.pz16, false).then(ok => { if (ok) { $('#f3dImg').style.transition = 'opacity .8s'; $('#f3dImg').style.opacity = 0; } });
@@ -834,8 +994,8 @@ f3d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') {
 /* ===== Visor 3D a pantalla completa ===== */
 const viewer = $('#viewer'), vStage = $('#vStage');
 const LIST = MENU.flatMap(c => c.items.filter(it => FOTOS[it.id]).map(it => ({ it, cat: c })));
-const v3d = new Dish3D($('#vCanvas'), { amp: .07, dpr: 2, shine: .6 });
-if (v3d.ok) { v3d.bindDrag(vStage); Gyro.subs.add(v3d); } else { $('#vCanvas').hidden = true; $('#vImg').hidden = false; }
+const v3d = new Dish3D($('#vCanvas'), { amp: .055, dpr: 2, shine: .6, zoom: 1.04, focus: .08 });
+if (v3d.ok) { v3d.enableZoom(vStage); v3d.bindDrag(vStage); Gyro.subs.add(v3d); } else { $('#vCanvas').hidden = true; $('#vImg').hidden = false; }
 let vIdx = 0, lastFocus = null;
 function vPrice(it) {
   if (it.s) { const i = SIZES.findIndex(s => s[0] === size); return `<small>${SIZES[i][1]}</small>${money(it.s[i])}`; }
@@ -868,7 +1028,7 @@ function openViewer(id) {
   hero.stop && hero.stop();
   viewer.hidden = false; document.documentElement.style.overflow = 'hidden';
   $('#gyroBtn').hidden = !(needsGyroPermission && !Gyro.on);
-  $('#vHintTxt').textContent = Gyro.on ? 'Inclina el teléfono o arrastra el plato' : 'Arrastra el plato para girarlo';
+  $('#vHintTxt').textContent = Gyro.on ? 'Inclina el teléfono o arrastra el plato' : 'Arrastra para girar · pellizca o toca 2 veces para acercar';
   showDish(i);
   requestAnimationFrame(() => { viewer.classList.add('open'); v3d.start && v3d.start(); });
   $('#vClose').focus();
@@ -913,4 +1073,5 @@ if (!REDUCED && 'IntersectionObserver' in window) {
   addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(par); }, { passive: true });
   par();
 }
+{ const q=document.getElementById('q'), box=q.closest('.search'); const sync=()=>box.classList.toggle('has-q', q.value.trim()!==''); q.addEventListener('input',sync); document.getElementById('qclear').addEventListener('click',()=>setTimeout(sync,0)); }
 </script>
